@@ -1,14 +1,15 @@
+import time
+import psutil
 import pymysql
+import requests
 from dbutils.pooled_db import PooledDB
+from flask import request
+from pythonrobot.util.config import dir_path
 
 #responseCode变量
 class ResponseCode(object):
-    SUCCESS = 0 #成功
-    FAIL = -1 #失败
-    NO_RESOURCE_FOUND = 40001 #未找到资源
-    INVALID_PARAMETER = 40002 #参数无效
-    ACCOUNT_OR_PASS_WORD_ERR = 40003 #账号或密码错误
-
+    SUCCESS = True #成功
+    FAIL = False #失败
 
 #responseMessage提示
 class ResponseMessage(object):
@@ -23,7 +24,6 @@ class ResMsg(object):
     """
     封装响应文本
     """
-
     def __init__(self, data=None, code=ResponseCode.SUCCESS,
     			 msg=ResponseMessage.SUCCESS):
         self._data = data
@@ -67,7 +67,6 @@ class ResMsg(object):
         body["code"] = body.pop("_code")
         return body
 
-
 #基于线程池对数据库进行访问
 class sql:
     def __init__(self):
@@ -89,6 +88,7 @@ class sql:
         :return:
         """
         # 使用连接池进行连接
+        start_time = time.time()
         conn = self.POOL.connection()
         cursor = conn.cursor()
         cursor.execute(sql)
@@ -96,6 +96,79 @@ class sql:
         conn.commit()
         cursor.close()
         conn.close()
-        return f"data has been registered."
+        end_time = time.time()
+        duration = end_time-start_time
+        cpu_percent = psutil.cpu_percent()  # 获取CPU使用率
+        memory_info = psutil.virtual_memory()  # 获取内存信息
+        detail_info = {"time":f"{duration:.2f}","cpu":cpu_percent,"memory_cpu":memory_info.percent}
+        return detail_info,f"data has been registered."
+
+#配置日志
+def cls_log():
+    import logging
+
+    # 配置日志记录器
+    # logger = logging.getLogger('flask_app')
+    # logger.setLevel(logging.INFO)
+
+    # 配置自定义日志记录器，用于自己需要调试的信息展示
+    flask_logger = logging.getLogger()
+    flask_logger.setLevel(logging.INFO)  # 设置日志输出等级至少在INFO及以上
+
+    # 创建一个文件处理器，将日志记录到flask_api.log文件中
+    log_file_path = dir_path / 'log' / 'robot_api.log'  # 使用 / 运算符拼接路径
+    file_handler = logging.FileHandler(log_file_path)
+    file_handler.setLevel(logging.INFO)
+
+    # 创建一个控制台处理器，将日志输出到控制台
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.DEBUG)  # 设置日志输出等级至少在INFO及以上
+
+    # 定义日志格式
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    file_handler.setFormatter(formatter)
+    console_handler.setFormatter(formatter)
+
+    # 将处理器添加到日志记录器
+    flask_logger.addHandler(file_handler)  # 将自定义的日志写入文件中
+    flask_logger.addHandler(console_handler)  # 将自定义的日志写输出到控制台中
+
+    return flask_logger
+
+#记录cpu、性能、内存状态
+def log_performance(api):
+    current_url = request.url
+    cloud_server_logger = cls_log()
+    duration = time.time() - request.start_time # 获取请求消耗时间
+    cpu_percent = psutil.cpu_percent()  # 获取CPU使用率
+    memory_info = psutil.virtual_memory()  # 获取内存信息
+    cloud_server_logger.info(f"Request to {current_url} took {duration:.2f} seconds,CPU:{cpu_percent},memory_info{memory_info.percent}")
+
+#聚合多个请求的参数
+def combine_api(api_dict):
+    for api in api_dict:
+        combine_server = cls_log(api)
+        try:
+            response = requests.get(api)
+            combine_server.info(f"正在聚合{api},状态码为：{response.status_code}")
+            api_dict[api]=response.json() if response.status_code == 200 else None
+        except Exception as e:
+            combine_server.error(f"聚合{api}失败,状态码为：{response.status_code},error:{e}")
+    return api_dict
+
+#清除日志
+def clear_log():
+    log_file_path = dir_path / 'log' / 'flask_api.log'  # 使用 / 运算符拼接路径
+    filename = log_file_path
+    with open(filename, 'w') as file:
+        pass
+
+#清楚数据库数据
+def clear_mysql():
+    pass
 
 
+
+
+if __name__ =="__main__":
+    clear_log()
