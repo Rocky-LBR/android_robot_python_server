@@ -1,0 +1,67 @@
+2024-08-23 09:26:41,266 - pythonrobot - INFO - 正在执行数据库操作:insert into userdata(avatar,avatarDesc,nickname,phone,status) values('','个人头像','小智7','+57 321 2966255','你好，我正在使用WhatsApp');
+2024-08-23 09:26:41,273 - pythonrobot - INFO - 数据库操作:insert into userdata(avatar,avatarDesc,nickname,phone,status) values('','个人头像','小智7','+57 321 2966255','你好，我正在使用WhatsApp');,performance:{'time': '0.00', 'cpu': 0.0, 'memory_cpu': 50.9}
+2024-08-23 09:26:41,273 - pythonrobot - INFO - 数据库操作完成:insert into userdata(avatar,avatarDesc,nickname,phone,status) values('','个人头像','小智7','+57 321 2966255','你好，我正在使用WhatsApp');
+2024-08-23 09:26:41,276 - pythonrobot - INFO - Request to http://127.0.0.1:5000/register took 0.01 seconds,CPU:0.0,memory_info50.9
+2024-08-23 09:30:31,992 - pythonrobot - INFO - 正在执行数据库操作:insert into userdata(avatar,avatarDesc,nickname,phone,status) values('','个人头像','小智7','+57 321 2966255','你好，我正在使用WhatsApp');
+2024-08-23 09:30:31,999 - pythonrobot - INFO - 数据库操作:insert into userdata(avatar,avatarDesc,nickname,phone,status) values('','个人头像','小智7','+57 321 2966255','你好，我正在使用WhatsApp');,performance:{'time': '0.00', 'cpu': 0.0, 'memory_cpu': 55.7}
+2024-08-23 09:30:31,999 - pythonrobot - INFO - 数据库操作完成:insert into userdata(avatar,avatarDesc,nickname,phone,status) values('','个人头像','小智7','+57 321 2966255','你好，我正在使用WhatsApp');
+2024-08-23 09:30:32,003 - pythonrobot - INFO - Request to http://127.0.0.1:5000/register took 0.01 seconds,CPU:0.0,memory_info55.7
+2024-08-23 09:30:45,661 - pythonrobot - INFO - 开始进行聚合请求
+2024-08-23 09:30:45,661 - pythonrobot - ERROR - 聚合错误:name 'cls_log' is not defined
+2024-08-23 09:30:45,662 - pythonrobot - ERROR - Exception on /combine_server [GET]
+Traceback (most recent call last):
+  File "D:\testproject\flaskpro\pythonProject1\pythonrobot\apis\combine_server.py", line 32, in combine_server
+    aggregated_data = combine_api(api_dict_info)
+  File "D:\testproject\flaskpro\pythonProject1\pythonrobot\util\util.py", line 164, in combine_api
+    combine_server = cls_log(api)
+NameError: name 'cls_log' is not defined
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\testproject\flaskpro\pythonProject1\.venv\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "D:\testproject\flaskpro\pythonProject1\.venv\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "D:\testproject\flaskpro\pythonProject1\.venv\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "D:\testproject\flaskpro\pythonProject1\.venv\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "D:\testproject\flaskpro\pythonProject1\pythonrobot\apis\combine_server.py", line 39, in combine_server
+    return jsonify(e)
+  File "D:\testproject\flaskpro\pythonProject1\.venv\lib\site-packages\flask\json\__init__.py", line 170, in jsonify
+    return current_app.json.response(*args, **kwargs)  # type: ignore[return-value]
+  File "D:\testproject\flaskpro\pythonProject1\.venv\lib\site-packages\flask\json\provider.py", line 214, in response
+    f"{self.dumps(obj, **dump_args)}\n", mimetype=self.mimetype
+  File "D:\testproject\flaskpro\pythonProject1\.venv\lib\site-packages\flask\json\provider.py", line 179, in dumps
+    return json.dumps(obj, **kwargs)
+  File "D:\anoconda\envs\testenv\lib\json\__init__.py", line 234, in dumps
+    return cls(
+  File "D:\anoconda\envs\testenv\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\anoconda\envs\testenv\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\testproject\flaskpro\pythonProject1\.venv\lib\site-packages\flask\json\provider.py", line 121, in _default
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+TypeError: Object of type NameError is not JSON serializable
+2024-08-23 09:30:45,669 - pythonrobot - INFO - Request to http://127.0.0.1:5000/combine_server took 0.00 seconds,CPU:0.0,memory_info55.7
+2024-08-23 09:32:39,374 - pythonrobot - INFO - 开始进行聚合请求
+2024-08-23 09:32:39,378 - pythonrobot - INFO - 正在聚合http://127.0.0.1:5000/test/1,状态码为：200
+2024-08-23 09:32:39,380 - pythonrobot - INFO - 正在聚合http://127.0.0.1:5000/test/2,状态码为：200
+2024-08-23 09:32:39,380 - pythonrobot - INFO - 完成聚合请求
+2024-08-23 09:32:39,384 - pythonrobot - INFO - Request to http://127.0.0.1:5000/combine_server took 0.01 seconds,CPU:0.0,memory_info55.8
+2024-08-23 09:34:19,868 - pythonrobot - INFO - 开始进行聚合请求
+2024-08-23 09:34:19,871 - pythonrobot - INFO - 正在聚合http://127.0.0.1:5000/test/1,状态码为：200
+2024-08-23 09:34:19,873 - pythonrobot - INFO - 正在聚合http://127.0.0.1:5000/test/2,状态码为：200
+2024-08-23 09:34:19,873 - pythonrobot - INFO - 完成聚合请求
+2024-08-23 09:34:19,876 - pythonrobot - INFO - Request to http://127.0.0.1:5000/combine_server took 0.00 seconds,CPU:0.0,memory_info56.2
+2024-08-23 09:35:43,208 - pythonrobot - INFO - 开始进行聚合请求
+2024-08-23 09:35:43,211 - pythonrobot - INFO - 正在聚合http://127.0.0.1:5000/test/1,状态码为：200
+2024-08-23 09:35:43,213 - pythonrobot - INFO - 正在聚合http://127.0.0.1:5000/test/2,状态码为：200
+2024-08-23 09:35:43,214 - pythonrobot - INFO - 完成聚合请求
+2024-08-23 09:35:43,217 - pythonrobot - INFO - Request to http://127.0.0.1:5000/combine_server took 0.01 seconds,CPU:0.0,memory_info56.2
+2024-08-23 09:38:33,161 - pythonrobot - INFO - 开始进行聚合请求
+2024-08-23 09:38:33,164 - pythonrobot - INFO - 正在聚合http://127.0.0.1:5000/test/1,状态码为：200
+2024-08-23 09:38:33,166 - pythonrobot - INFO - 正在聚合http://127.0.0.1:5000/test/2,状态码为：200
+2024-08-23 09:38:33,166 - pythonrobot - INFO - 完成聚合请求
+2024-08-23 09:38:33,170 - pythonrobot - INFO - Request to http://127.0.0.1:5000/combine_server took 0.00 seconds,CPU:0.0,memory_info55.0
